@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+// Extiende de documentos porque en mongo insertamos documentos y no registros en tablas
 @Schema()
 export class Pokemon extends Document {
   @Prop({
