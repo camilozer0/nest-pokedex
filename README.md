@@ -18,5 +18,5 @@ npm i -g @nest/cli
 docker-compose up -d
 
 # Stack usado
-*MongoDB
-*Nest
+* MongoDB
+* Nest

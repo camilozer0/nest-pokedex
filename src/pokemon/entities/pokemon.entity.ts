@@ -4,6 +4,7 @@ import { Document } from 'mongoose';
 // Extiende de documentos porque en mongo insertamos documentos y no registros en tablas
 @Schema()
 export class Pokemon extends Document {
+  // defino el decorador property y le defino las opciones
   @Prop({
     unique: true,
     index: true,
@@ -16,4 +17,4 @@ export class Pokemon extends Document {
   no: number;
 }
 
-export const PokemonSchema = SchemaFactory.createForClass(Pokemon);
+export const PokemonSchema = SchemaFactory.createForClass( Pokemon );

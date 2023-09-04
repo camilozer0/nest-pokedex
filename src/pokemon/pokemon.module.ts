@@ -10,7 +10,9 @@ import { Pokemon, PokemonSchema } from './entities/pokemon.entity';
   imports: [
     MongooseModule.forFeature([
       {
+        // este no es el nombre del pokemon, tener cuidado
         name: Pokemon.name,
+        // importamos el esquema
         schema: PokemonSchema,
       },
     ]),
