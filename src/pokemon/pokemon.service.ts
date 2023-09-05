@@ -20,14 +20,7 @@ export class PokemonService {
       const pokemon = await this.pokemonModel.create(createPokemonDto);
       return pokemon;
     } catch (error) {
-      // el error 11000 nos dice que el pokemon a crear ya esta creado
-      if (error.code === 11000) {
-        // lanzamos el badrequest y esto tambien nos cambia el status al devolver la respuesta
-        throw new BadRequestException(`Pokemon already exists in db ${JSON.stringify(error.keyValue)}`);
-      }
-      console.log(error);
-      // si no es el error 11000, es otro tipo de problema y lanzo el internalserver
-      throw new InternalServerErrorException(`Can't create pokemon - Check server logs`);
+      this.handleExceptions(error);
     }
     
   }
@@ -57,11 +50,34 @@ export class PokemonService {
     return pokemon
   }
 
-  update(id: number, updatePokemonDto: UpdatePokemonDto) {
-    return `This action updates a #${id} pokemon`;
+  async update(vS: string, updatePokemonDto: UpdatePokemonDto) {
+
+    const pokemon = await this.findOne( vS );
+    if ( updatePokemonDto.name ) 
+      updatePokemonDto.name = updatePokemonDto.name.toLowerCase();
+
+    try {
+      await pokemon.updateOne( updatePokemonDto);
+      return { ...pokemon.toJSON(), ...updatePokemonDto };
+    } catch (error) {
+      this.handleExceptions(error);
+    }
+    
   }
 
   remove(id: number) {
     return `This action removes a #${id} pokemon`;
   }
+
+  // para evitar el codigo duplicado hago una funcion y la llamo
+  private handleExceptions( error: any) {
+    if (error.code === 11000) {
+      // lanzamos el badrequest y esto tambien nos cambia el status al devolver la respuesta
+      throw new BadRequestException(`Pokemon already exists in db ${JSON.stringify(error.keyValue)}`);
+    }
+    console.log(error);
+    // si no es el error 11000, es otro tipo de problema y lanzo el internalserver
+    throw new InternalServerErrorException(`Can't create pokemon - Check server logs`);
+  }
+  
 }
