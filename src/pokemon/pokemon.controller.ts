@@ -16,6 +16,7 @@ export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
 
   @Post()
+  // @HttpCode( 200 ) o @HttpCode( HttpStatus.OK )para cambiar el codigo de respuesta de este endpoint
   create(@Body() createPokemonDto: CreatePokemonDto) {
     return this.pokemonService.create(createPokemonDto);
   }
@@ -25,9 +26,10 @@ export class PokemonController {
     return this.pokemonService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pokemonService.findOne(+id);
+  // vS: value search
+  @Get(':vS')
+  findOne(@Param('vS') vS: string) {
+    return this.pokemonService.findOne( vS );
   }
 
   @Patch(':id')
