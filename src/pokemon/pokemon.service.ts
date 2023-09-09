@@ -65,8 +65,14 @@ export class PokemonService {
     
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pokemon`;
+  async remove(id: string) {
+    /* Si quiero borrar el pokemon con id, nombre o no
+    const pokemon = await this.findOne( id );
+    await pokemon.deleteOne(); */
+    
+    // this.pokemonModel.findByIdAndDelete( id ); 
+    const result = this.pokemonModel.findByIdAndDelete(id);
+    return { id }
   }
 
   // para evitar el codigo duplicado hago una funcion y la llamo
