@@ -71,8 +71,11 @@ export class PokemonService {
     await pokemon.deleteOne(); */
     
     // this.pokemonModel.findByIdAndDelete( id ); 
-    const result = this.pokemonModel.findByIdAndDelete(id);
-    return { id }
+    // const result = await this.pokemonModel.findByIdAndDelete(id);
+    const { acknowledged, deletedCount } = await this.pokemonModel.deleteOne({ _id: id });
+    if (deletedCount === 0) 
+    throw new BadRequestException(`Pokemon with id "${ id }" not found`)
+    return;
   }
 
   // para evitar el codigo duplicado hago una funcion y la llamo
