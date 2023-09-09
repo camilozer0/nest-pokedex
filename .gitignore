@@ -35,11 +35,5 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-mongo/diagnostic.data/metrics.interim
-mongo/index-5--1052112514889162469.wt
-mongo/index-6--1052112514889162469.wt
-mongo/WiredTiger.turtle
-mongo/WiredTiger.wt
-mongo/diagnostic.data/metrics.2023-09-09T14-59-23Z-00000
-mongo/diagnostic.data/metrics.interim
 .gitignore
+mongo/diagnostic.data/metrics.interim
