@@ -1,21 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import axios, { AxiosInstance } from 'axios';
 import { PokeResponse } from './interfaces/poke-response.interface';
 import { InjectModel } from '@nestjs/mongoose';
 import { Pokemon } from 'src/pokemon/entities/pokemon.entity';
-import { PokemonModule } from '../pokemon/pokemon.module';
 import { Model } from 'mongoose';
+import { AxiosAdapter } from 'src/common/adapters/axios.adapter';
 
 @Injectable()
 export class SeedService {
 
   constructor (
     @InjectModel(Pokemon.name)
-    private readonly pokemonModel: Model<Pokemon>
+    private readonly pokemonModel: Model<Pokemon>,
+    private readonly http: AxiosAdapter,
   ){}
 
-  // Se crea una dependencia de axios
-  private readonly axios: AxiosInstance = axios;
 
   async executeSeed() {
     
@@ -23,7 +21,7 @@ export class SeedService {
     // Si hay pokemons previamente en la base de datos los borro
     await this.pokemonModel.deleteMany({});
 
-    const { data } = await this.axios.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon/?limit=650')
+    const data = await this.http.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon/?limit=650')
 
     // creo un arreglo de tipo nombre, no, para luego insertarlo en la base de datos
     const pokemonToInsert: { name: string, no: number }[] = []
