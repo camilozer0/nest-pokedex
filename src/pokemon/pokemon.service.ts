@@ -9,7 +9,7 @@ import { InjectModel } from '@nestjs/mongoose';
 export class PokemonService {
 
   constructor(
-    // con el decorador insertamos el modelo (implmentacion de nest para trabajar con modelos)
+    // con el decorador insertamos el modelo (implementacion de nest para trabajar con modelos)
     @InjectModel(Pokemon.name )
     private readonly pokemonModel: Model<Pokemon>
   ) {}
