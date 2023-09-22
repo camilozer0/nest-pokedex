@@ -16,15 +16,26 @@ export class SeedService {
 
   // Se crea una dependencia de axios
   private readonly axios: AxiosInstance = axios;
+
   async executeSeed() {
-    const { data } = await this.axios.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon/?limit=10')
-  data.results.forEach( async ({ name, url}) => {
+    
+
+    // Si hay pokemons previamente en la base de datos los borro
+    await this.pokemonModel.deleteMany({});
+
+    const { data } = await this.axios.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon/?limit=650')
+
+    // creo un arreglo de tipo nombre, no, para luego insertarlo en la base de datos
+    const pokemonToInsert: { name: string, no: number }[] = []
+  
+    data.results.forEach(({ name, url}) => {
     const segments = url.split('/');
     const no = +segments[ segments.length - 2 ];
-    const pokemon = await this.pokemonModel.create( { name, no });
-    console.log({ name, no})
+    pokemonToInsert.push({ name, no })
   }) 
-  return 'seed Executed';
+  // crea una sola insersion con muchas entradas, es la recomendacion
+    await this.pokemonModel.insertMany(pokemonToInsert)
+    return 'seed Executed';
   }
 
 }
