@@ -17,11 +17,15 @@ npm i -g @nest/cli
 
 docker-compose up -d
 
-5. Correr el programa
+5. Clonar el archivo __.env.template__ y renombrar la copia a __.env__
+
+6. Llenar las variables de entorno definidas en el __```.env```__
+
+7. Ejecutar la aplicacion en dev
 
 yarn start:dev
 
-6. Poblar la base de datos con la semilla
+8. Poblar la base de datos con la semilla
 
 http://localhost:3000/api/seed
 
